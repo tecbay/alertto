@@ -24,21 +24,9 @@ class ScriptController extends Controller
     public function __invoke()
     {
 
-        foreach ($this->alert->targeting_rules->where('action', TargetingRuleAction::SHOW->value) as $targetingRule) {
+        $this->applyShowableTargetingRules();
 
-            if ($this->show = $this->isShowable($targetingRule)) {
-                break;
-            }
-        }
-
-        foreach ($this->alert->targeting_rules->where('action', TargetingRuleAction::HIDE->value) as $targetingRule) {
-
-            if ($this->isHideable($targetingRule)) {
-                $this->show = false;
-                break;
-            }
-
-        }
+        $this->applyHideableTargetingRules();
 
         if ($this->show) {
             $this->jsCode = "alert('{$this->alert->message}')";
@@ -46,7 +34,6 @@ class ScriptController extends Controller
 
         return response($this->jsCode)
             ->header('Content-Type', 'application/javascript');
-
     }
 
     protected function isShowable(TargetingRuleData $rule): bool
@@ -75,5 +62,24 @@ class ScriptController extends Controller
             TargetingRuleCondition::END_WITH => $path->endsWith($value),
             default => false,
         };
+    }
+
+    public function applyShowableTargetingRules(): void
+    {
+        foreach ($this->alert->targeting_rules->where('action', TargetingRuleAction::SHOW->value) as $targetingRule) {
+            if ($this->show = $this->isShowable($targetingRule)) {
+                break;
+            }
+        }
+    }
+
+    public function applyHideableTargetingRules(): void
+    {
+        foreach ($this->alert->targeting_rules->where('action', TargetingRuleAction::HIDE->value) as $targetingRule) {
+            if ($this->isHideable($targetingRule)) {
+                $this->show = false;
+                break;
+            }
+        }
     }
 }

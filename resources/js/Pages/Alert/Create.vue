@@ -5,10 +5,9 @@ import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import {ref} from "vue";
-import TargetingRule from "@/Pages/TargetingRule/Parts/TargetingRule.vue";
 import {ArrowLeftIcon} from '@heroicons/vue/20/solid'
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import TargetingRule from "@/Pages/Alert/Parts/TargetingRule.vue";
 
 const newRule = function () {
     alertForm.rules.push({
@@ -34,7 +33,7 @@ const alertForm = useForm({
 </script>
 
 <template>
-    <Head title="Dashboard"/>
+    <Head title="Create Alert"/>
 
     <AuthenticatedLayout>
         <template #header>
@@ -62,7 +61,7 @@ const alertForm = useForm({
                     placeholder="e.g. hello world!"
                     v-model="alertForm.message"
                 />
-                <InputError class="mt-2"/>
+                <InputError class="mt-2" :message="alertForm.errors.message"/>
             </div>
 
             <div class="bg-white shadow-sm sm:rounded-lg p-5 ">
@@ -72,7 +71,9 @@ const alertForm = useForm({
                     @delete:targetingRule="onDelete"
                     :key="i"
                     v-model="alertForm.rules[i]"
-                    :index="i">
+                    :index="i"
+                    :error-message="alertForm.errors[`rules.${i}.value`]"
+                >
                 </TargetingRule>
 
                 <div class="mt-5">
