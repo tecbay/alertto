@@ -55,9 +55,14 @@ const alertForm = useForm({
             </div>
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-5">
-                <p class="p-5 bg-gray-800 text-white rounded-lg">
-                    {{ `&lt;script src=&quot;${usePage().props.ziggy.url}/alert.js?id=${props.alert.ulid}&quot; &gt;&lt;/script&gt;` }}
-                </p>
+                <p class="text-sm py-2">Include the JavaScript on your page once, ideally right after the opening body tag.</p>
+                <pre class="p-5 bg-gray-800 text-white rounded-lg overflow-auto">{{`&lt;script async&gt;
+var currentPath = window.location.pathname;
+var scriptTag = document.createElement('script');
+scriptTag.src = '${usePage().props.ziggy.url}/alert.js?id=${props.alert.ulid}&amp;path='+encodeURIComponent(currentPath);
+document.head.appendChild(scriptTag);
+&lt;/script&gt;`}}
+                </pre>
             </div>
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-5">
