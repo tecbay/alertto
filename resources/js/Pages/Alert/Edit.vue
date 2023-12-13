@@ -59,7 +59,7 @@ const alertForm = useForm({
             </div>
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-5">
-                <p class="text-sm py-2 text-gray-500 font-semibold">Include the JavaScript on your page once, ideally right after the opening body tag.</p>
+                <p class="text-sm py-2 text-gray-500 font-semibold">Include the JavaScript on your page once, ideally inside Head tag.</p>
                 <code>
                     <pre class="p-5 bg-gray-800 text-white rounded-lg overflow-auto">
 &lt;script async&gt;
