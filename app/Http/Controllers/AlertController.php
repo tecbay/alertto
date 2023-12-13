@@ -11,7 +11,7 @@ class AlertController extends Controller
 {
     public function index(): \Inertia\Response
     {
-        return Inertia::render('Alert/Index', ['alerts' => Alert::all()]);
+        return Inertia::render('Alert/Index', ['alerts' => auth()->user()->alerts()->get()]);
     }
 
     public function create(): \Inertia\Response
