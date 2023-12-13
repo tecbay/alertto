@@ -10,6 +10,7 @@ import TargetingRule from "@/Pages/Alert/Parts/TargetingRule.vue";
 import {ArrowLeftIcon} from '@heroicons/vue/20/solid'
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import VueCodeHighlight from 'vue-code-highlight';
+import Alert from "@/Components/Alert.vue";
 
 const props = defineProps({
     alert: {required: true, type: Object}
@@ -50,6 +51,9 @@ const alertForm = useForm({
         </template>
 
         <div class="max-w-3xl mx-auto py-12 sm:px-6 lg:px-8 flex flex-col gap-5">
+
+            <Alert v-model="usePage().props.flash.message"></Alert>
+
             <div class="self-end">
                 <SecondaryButton @click="()=>{alertForm.patch(route('alerts.update',{alert:props.alert.ulid}))}">Update</SecondaryButton>
             </div>
@@ -57,14 +61,14 @@ const alertForm = useForm({
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-5">
                 <p class="text-sm py-2 text-gray-500 font-semibold">Include the JavaScript on your page once, ideally right after the opening body tag.</p>
                 <code>
-                <pre class="p-5 bg-gray-800 text-white rounded-lg overflow-auto">
+                    <pre class="p-5 bg-gray-800 text-white rounded-lg overflow-auto">
 &lt;script async&gt;
     var currentPath = window.location.pathname;
     var scriptTag = document.createElement('script');
     scriptTag.src = '{{usePage().props.ziggy.url}}/alert.js?id={{props.alert.ulid}}&amp;path='+encodeURIComponent(currentPath);
     document.head.appendChild(scriptTag);
 &lt;/script&gt;</pre>
-                </code>
+                    </code>
             </div>
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-5">

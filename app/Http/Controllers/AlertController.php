@@ -39,6 +39,6 @@ class AlertController extends Controller
     {
         $alert->update(['message' => $requestData->message, 'targeting_rules' => $requestData->rules]);
 
-        return back();
+        return back()->with('message','Alert updated successfully.');
     }
 }
